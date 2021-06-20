@@ -29,7 +29,7 @@ router.get('/:id',
   });
 router.get('/',
   async (req, res, next) => {
-    user.getAll()
+    user.getAll(req.query)
       .then((response) => {
         _handleResponse({
           res,

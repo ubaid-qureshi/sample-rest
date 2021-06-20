@@ -42,11 +42,17 @@ class User {
     }
   }
 
-  async getAll(filter = {}) {
+  async getAll(pageNo = 1, pageSize = 10, filter = {}) {
     try {
+      if (pageNo < 1 || pageSize < 1) throw new AppError(400, 'Invalid Pagination - pageNo and pageSize should be greater than 0');
+      const skip = (Number(pageNo) - 1) * Number(pageSize);
+      const limit = Number(pageSize);
       filter.isDeleted = false;
       filter.isBlocked = false;
-      return await this.userModel.find(filter, this.projection);
+      return await this.userModel
+        .find(filter, this.projection)
+        .skip(skip)
+        .limit(limit);
     } catch (error) {
       throw new AppError(400, error.message);
     }

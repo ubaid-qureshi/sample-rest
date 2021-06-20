@@ -60,9 +60,8 @@ class User {
     return this.userDao.getOneByQuery(filter);
   }
 
-  async getAll(filter) {
-    // TODO - Add pagination
-    return this.userDao.getAll(filter);
+  async getAll({ pageNo, pageSize }) {
+    return this.userDao.getAll(pageNo, pageSize);
   }
 
   // Soft deleting user
