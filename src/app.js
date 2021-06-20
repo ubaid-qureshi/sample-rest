@@ -1,5 +1,6 @@
 require('./utils/logger/logConfig');
 require('./utils/requestHandlers/responseHandler');
+require('./utils/db/mongo')();
 require('dotenv').config();
 
 const express = require('express');
