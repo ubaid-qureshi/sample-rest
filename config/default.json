@@ -5,5 +5,7 @@
     },
     "LOGS": {
         "LOG_LEVEL" : "debug"
-    }
+    },
+    "BCRYPT_SALT": 10
+
 }

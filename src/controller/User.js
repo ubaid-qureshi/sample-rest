@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const { BCRYPT_SALT } = require('config');
 const { AppError } = require('../utils/requestHandlers/errorHandler');
 
 class User {
@@ -9,6 +11,8 @@ class User {
   async create(userData) {
     try {
       _logger.debug(userData);
+      userData.password = await bcrypt.hash(userData.password, BCRYPT_SALT);
+      console.log(userData);
       const {
         id, email, username, phoneNumber,
       } = await this.userDao.create(userData);
