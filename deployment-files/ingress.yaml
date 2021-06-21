@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: sample-rest
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  tls:
+  - hosts:
+    - sample.domain.com
+    secretName: secret-ssl-tls
+  rules:
+  - host: sample.domain.com
+    http:
+      paths:
+      - path: /(.*)
+        backend:
+          serviceName: sample-rest
+          servicePort: 80

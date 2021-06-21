@@ -1,0 +1,11 @@
+{
+    "APP_PORT": 8000,
+    "db": {
+        "MONGODB_URI": "mongodb://mongo:27017/sample-rest"
+    },
+    "LOGS": {
+        "LOG_LEVEL" : "debug"
+    },
+    "BCRYPT_SALT": 10,
+    "JWT_TOKEN_SECRET": "Strong String - Should keep this in env"
+}
