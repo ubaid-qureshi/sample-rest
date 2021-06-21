@@ -1,3 +1,7 @@
+#Local
+data
+coverage
+
 # Logs
 logs
 *.log
