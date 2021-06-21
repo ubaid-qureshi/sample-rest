@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
-// const { BCRYPT_SALT } = require('config');
+const jwt = require('jsonwebtoken');
+const { JWT_TOKEN_SECRET } = require('config');
 const { AppError } = require('../utils/requestHandlers/errorHandler');
 
 class Authentication {
@@ -17,13 +18,29 @@ class Authentication {
 
   async login({ email, password }) {
     try {
+      /**
+       * ToDO: Add Refresh Token as well
+       */
       _logger.debug(`${email} ${password}`);
-      const user = await this.userController.getOneCompleteDoc({ email });
+      const {
+        id,
+        username,
+        email: userEmail,
+        password: userPassword,
+      } = await this.userController.getOneCompleteDoc({ email });
       // check credentials
-      if (bcrypt.compareSync(password, user.password)) {
-        return user;
+      if (bcrypt.compareSync(password, userPassword)) {
+        return {
+          id,
+          username,
+          email: userEmail,
+          accessToken: jwt.sign(
+            userPassword,
+            process.env.TOKEN_SECRET || JWT_TOKEN_SECRET,
+          ),
+        };
       }
-      throw new AppError(400, 'Invalid email or password');
+      throw new AppError(401, 'Invalid email or password');
     } catch (error) {
       throw new AppError(error.code || 400, error.message);
     }

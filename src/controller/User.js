@@ -12,7 +12,6 @@ class User {
     try {
       _logger.debug(userData);
       userData.password = await bcrypt.hash(userData.password, BCRYPT_SALT);
-      console.log(userData);
       const {
         id, email, username, phoneNumber,
       } = await this.userDao.create(userData);
@@ -46,7 +45,6 @@ class User {
   }
 
   // Getting Users
-
   async getOneCompleteDoc(filter) {
     // Including all DB fields
     _logger.debug(filter);
